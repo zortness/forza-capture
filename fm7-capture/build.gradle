@@ -1,0 +1,24 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.resources.srcDirs = [ "resources" ]
+
+project.ext.mainClassName = "net.kopfhaus.forza.Fm7Capture"
+project.ext.assetsDir = new File("./")
+
+task run(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+    jvmArgs '-Djava.net.preferIPv4Stack=true'
+}
+
+
+eclipse.project {
+    name = appName
+}
